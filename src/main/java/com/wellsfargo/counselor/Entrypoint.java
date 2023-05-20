@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-public class Entrypoint {
+public class EntryPoint {
 
     public static void main(String[] args) {
-        SpringApplication.run(Entrypoint.class, args);
+        SpringApplication.run(EntryPoint.class, args);
     }
 
 }
