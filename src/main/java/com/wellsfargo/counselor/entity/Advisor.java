@@ -9,7 +9,7 @@ public class Advisor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long advisorId;
-
+    
     @Column(nullable = false)
     private String firstName;
 
