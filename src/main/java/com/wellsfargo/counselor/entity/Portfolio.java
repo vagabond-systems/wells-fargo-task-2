@@ -2,11 +2,34 @@ package com.wellsfargo.counselor.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Portfolio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long portfolioId;
+
+
+    private String name;
+    private List<Security> securities;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Security> getSecurities() {
+        return securities;
+    }
+
+    public void setSecurities(List<Security> securities) {
+        this.securities = securities;
+    }
 
     @OneToOne
     @JoinColumn(name = "client_id")
@@ -14,11 +37,15 @@ public class Portfolio {
 
 
     protected Portfolio() {
-        // Default constructor for JPA
+        this.securities = new ArrayList<>();
     }
 
-    public Portfolio(Client client) {
+    public Portfolio(String name, Client client) {
+
+        this.name = name;
         this.client = client;
+        this.securities = new ArrayList<>();
+
     }
 
     public long getPortfolioId() {
@@ -35,6 +62,10 @@ public class Portfolio {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public void addSecurity(Security security) {
+        securities.add(security);
     }
 }
 

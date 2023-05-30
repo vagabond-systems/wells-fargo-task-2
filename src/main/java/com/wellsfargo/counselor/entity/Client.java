@@ -15,10 +15,10 @@ public class Client {
     private String lastName;
 
     @Column(nullable = false)
-    private String Email;
+    private String email;
 
     @Column(nullable = false)
-    private String Phone;
+    private String phone;
 
     @ManyToOne
     @JoinColumn(name = "advisor_id")
@@ -29,9 +29,11 @@ public class Client {
         // Default constructor for JPA
     }
 
-    public Client(String firstName, String lastName, Advisor advisor) {
+    public Client(String firstName, String lastName, String email, String phone, Advisor advisor) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
         this.advisor = advisor;
     }
 
@@ -39,20 +41,48 @@ public class Client {
         this.clientId = clientId;
     }
 
+    public Long getClientId() {
+        return clientId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Advisor getAdvisor() {
+        return advisor;
+    }
+
+    public void setAdvisor(Advisor advisor) {
+        this.advisor = advisor;
+    }
+
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        email = email;
     }
 
     public String getPhone() {
-        return Phone;
+        return phone;
     }
 
     public void setPhone(String phone) {
-        Phone = phone;
+        phone = phone;
     }
 
 }

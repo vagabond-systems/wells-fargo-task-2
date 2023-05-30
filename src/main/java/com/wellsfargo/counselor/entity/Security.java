@@ -30,7 +30,7 @@ public class Security {
     @JoinColumn(name = "portfolio_id")
     private Portfolio portfolio;
 
-    protected Security() {
+    protected Security(String companyA, String stock, LocalDate now, double v, int quantity, Portfolio portfolio) {
         // Default constructor for JPA
     }
 

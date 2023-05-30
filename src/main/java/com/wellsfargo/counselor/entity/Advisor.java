@@ -9,7 +9,7 @@ public class Advisor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long advisorId;
-    
+
     @Column(nullable = false)
     private String firstName;
 
@@ -89,5 +89,9 @@ public class Advisor {
     public void setEmail(String email) {
 
         this.email = email;
+    }
+
+    public void addSecurityToPortfolio(Security security, Portfolio portfolio) {
+        portfolio.addSecurity(security);
     }
 }
