@@ -14,29 +14,22 @@ public class Portfolio {
 
     public Portfolio() {
     }
-
     public Portfolio(String name, Long clientId) {
         this.name = name;
         this.clientId = clientId;
     }
-
-    // Getters and Setters
     public Long getId() {
         return id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public Long getClientId() {
         return clientId;
     }
-
     public void setClientId(Long clientId) {
         this.clientId = clientId;
     }
