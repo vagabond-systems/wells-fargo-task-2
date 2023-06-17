@@ -1,0 +1,51 @@
+import javax.persistence.*;
+
+@Entity
+public class EntityClass {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(name = "entity_name")
+    private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "other_entity_id")
+    private OtherEntity otherEntity;
+
+    public EntityClass() {
+        // Default constructor
+    }
+
+    public EntityClass(String name, OtherEntity otherEntity) {
+        this.name = name;
+        this.otherEntity = otherEntity;
+    }
+
+    // Getter and setter for 'id'
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    // Getter and setter for 'name'
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // Getter and setter for 'otherEntity'
+    public OtherEntity getOtherEntity() {
+        return otherEntity;
+    }
+
+    public void setOtherEntity(OtherEntity otherEntity) {
+        this.otherEntity = otherEntity;
+    }
+}
