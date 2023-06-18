@@ -24,7 +24,7 @@ public class Client {
     @JoinColumn(name = "advisor_id")
     private Advisor advisor;
 
-    protected Client() {
+    public Client(String jane, String smith, String mail, String s, Advisor advisor) {
 
         // Default constructor for JPA
     }

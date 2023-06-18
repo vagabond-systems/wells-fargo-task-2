@@ -12,7 +12,7 @@ public class PortfolioID {
     private Client client;
 
 
-    protected PortfolioID() {
+    public PortfolioID(String clientPortfolio, Client client) {
         // Default constructor for JPA
     }
 
