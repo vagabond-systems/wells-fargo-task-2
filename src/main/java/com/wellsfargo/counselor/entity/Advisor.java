@@ -1,86 +1,65 @@
 package com.wellsfargo.counselor.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class Advisor {
+public class Client {
 
     @Id
     @GeneratedValue()
-    private long advisorId;
+    private long clientId;
 
     @Column(nullable = false)
-    private String firstName;
+    private String name;
 
     @Column(nullable = false)
-    private String lastName;
+    private String id;
 
     @Column(nullable = false)
-    private String address;
+    private String contactInformation;
 
-    @Column(nullable = false)
-    private String phone;
-
-    @Column(nullable = false)
-    private String email;
-
-    protected Advisor() {
+    protected Client() {
 
     }
 
-    public Advisor(String firstName, String lastName, String address, String phone, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
+    public Client(String name, String id, String contactInformation) {
+        this.name = name;
+        this.id = id;
+        this.contactInformation = contactInformation;
     }
 
-    public Long getAdvisorId() {
-        return advisorId;
+    public long getClientId() {
+        return clientId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public String getName() {
+        return name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public String getId() {
+        return id;
     }
 
-    public String getAddress() {
-        return address;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public String getContactInformation() {
+        return contactInformation;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setContactInformation(String contactInformation) {
+        this.contactInformation = contactInformation;
     }
 }
