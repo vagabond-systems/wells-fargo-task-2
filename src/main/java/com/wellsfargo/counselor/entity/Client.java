@@ -1,16 +1,15 @@
 package com.wellsfargo.counselor.entity;
 
-
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-public class Advisor {
+public class Client {
 
     @Id
     @GeneratedValue()
-    private long advisorId;
+    private long clientId;
 
     @Column(nullable = false)
     private String firstName;
@@ -27,35 +26,36 @@ public class Advisor {
     @Column(nullable = false)
     private String email;
 
+    @ManyToOne()
+    private Advisor advisor;
 
-   @OneToMany(cascade = CascadeType.ALL,mappedBy = "advisor")
-    private List<Client> Client;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "advisor")
+    private List<Portfolio> portfolios;
 
-    public void setAdvisorId(long advisorId) {
-        this.advisorId = advisorId;
+
+
+
+
+    public Client(){
+
     }
 
-    public List<Client> getClient() {
-        return Client;
-    }
-
-    public void setClient(List<Client> client) {
-        Client = client;
-    }
-
-    public Advisor() {
-    }
-
-    public Advisor(String firstName, String lastName, String address, String phone, String email) {
+    public Client(long clientId, String firstName, String lastName, String address, String phone, String email, Advisor advisor) {
+        this.clientId = clientId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phone = phone;
         this.email = email;
+
     }
 
-    public Long getAdvisorId() {
-        return advisorId;
+    public long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
     public String getFirstName() {
@@ -97,4 +97,6 @@ public class Advisor {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }
