@@ -1,97 +1,48 @@
 package com.wellsfargo.counselor.entity;
 
+
 import jakarta.persistence.*;
 
+@Entity
 public class Security {
+
     @Id
-    @GeneratedValue
-    public long securityID;
-    @Column(nullable = false)
-    public String firstName;
-    @Column(nullable = false)
-    public String lastName;
-    @Column(nullable = false)
-    public String securityCategory;
-    @Column(nullable = false)
-    public String purchaseDate;
-    @Column(nullable = false)
-    public long purchasePrice;
-    @Column(nullable = false)
-    public long purchaseQuantity;
+    @GeneratedValue()
+    private long securityId;
 
     @ManyToOne
-    @JoinColumn(name = "portfolioID")
-    public Portfolio portfolio;
+    private Portfolio portfolio;
 
-    @ManyToOne
-    @JoinColumn(name = "advisorId")
-    public Advisor advisor;
+    @Column(nullable = false)
+    private String name;
 
-    public Security(){
+    @Column(nullable = false)
+    private String category;
+
+    @Column(nullable = false)
+    private float purchasePrice;
+
+    @Column(nullable = false)
+    private String purchaseDate;
+
+    @Column(nullable = false)
+    private float quantity;
+
+    protected Security() {
 
     }
 
-    public Security(String firstName, String lastName, String securityCategory, String purchaseDate, long purchasePrice, long purchaseQuantity, Portfolio portfolio, Advisor advisor){
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.securityCategory = securityCategory;
-        this.purchaseDate = purchaseDate;
-        this.purchasePrice = purchasePrice;
-        this.purchaseQuantity = purchaseQuantity;
+    public Security(Portfolio portfolio, String name, String category, float purchasePrice, String purchaseDate, float quantity) {
         this.portfolio = portfolio;
-        this.advisor = advisor;
-    }
-
-    public long getSecurityID() {
-        return securityID;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getSecurityCategory() {
-        return securityCategory;
-    }
-
-    public void setSecurityCategory(String securityCategory) {
-        this.securityCategory = securityCategory;
-    }
-
-    public String getPurchaseDate() {
-        return purchaseDate;
-    }
-
-    public void setPurchaseDate(String purchaseDate) {
-        this.purchaseDate = purchaseDate;
-    }
-
-    public long getPurchasePrice() {
-        return purchasePrice;
-    }
-
-    public void setPurchasePrice(long purchasePrice) {
+        this.name = name;
+        this.category = category;
         this.purchasePrice = purchasePrice;
+        this.purchaseDate = purchaseDate;
+        this.quantity = quantity;
     }
 
-    public long getPurchaseQuantity() {
-        return purchaseQuantity;
-    }
-
-    public void setPurchaseQuantity(long purchaseQuantity) {
-        this.purchaseQuantity = purchaseQuantity;
+    public long getSecurityId() {
+        return securityId;
     }
 
     public Portfolio getPortfolio() {
@@ -102,11 +53,43 @@ public class Security {
         this.portfolio = portfolio;
     }
 
-    public Advisor getAdvisor() {
-        return advisor;
+    public String getName() {
+        return name;
     }
 
-    public void setAdvisor(Advisor advisor) {
-        this.advisor = advisor;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public float getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public void setPurchasePrice(float purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
+    public String getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(String purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
+    public float getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(float quantity) {
+        this.quantity = quantity;
     }
 }
