@@ -1,0 +1,392 @@
+package com.example.entities; // Adjust package to match your project
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+public class FinancialAdvisor {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long advisorId;
+
+    @Column(nullable = false, length = 50)
+    private String firstName;
+
+    @Column(nullable = false, length = 50)
+    private String lastName;
+
+    @Column(nullable = false, length = 100, unique = true)
+    private String email;
+
+    @Column(length = 20)
+    private String phone;
+
+    private LocalDate hireDate;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    @Column(nullable = false)
+    private Boolean isActive;
+
+    @OneToMany(mappedBy = "financialAdvisor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Client> clients = new ArrayList<>();
+
+    @OneToMany(mappedBy = "financialAdvisor", cascade = CascadeType.ALL)
+    private List<SystemUser> systemUsers = new ArrayList<>();
+
+    // Constructor initializing all fields
+    public FinancialAdvisor(String firstName, String lastName, String email, String phone,
+                            LocalDate hireDate, LocalDateTime createdAt, LocalDateTime updatedAt,
+                            Boolean isActive) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.hireDate = hireDate;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.isActive = isActive;
+    }
+
+    // Getters and Setters
+    public Long getAdvisorId() { return advisorId; }
+
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+
+    public LocalDate getHireDate() { return hireDate; }
+    public void setHireDate(LocalDate hireDate) { this.hireDate = hireDate; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
+    public Boolean getIsActive() { return isActive; }
+    public void setIsActive(Boolean isActive) { this.isActive = isActive; }
+
+    public List<Client> getClients() { return clients; }
+    public void setClients(List<Client> clients) { this.clients = clients; }
+
+    public List<SystemUser> getSystemUsers() { return systemUsers; }
+    public void setSystemUsers(List<SystemUser> systemUsers) { this.systemUsers = systemUsers; }
+}
+
+package com.example.entities;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+public class Client {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long clientId;
+
+    @ManyToOne
+    @JoinColumn(name = "advisor_id", nullable = false)
+    private FinancialAdvisor financialAdvisor;
+
+    @Column(nullable = false, length = 50)
+    private String firstName;
+
+    @Column(nullable = false, length = 50)
+    private String lastName;
+
+    @Column(nullable = false, length = 100, unique = true)
+    private String email;
+
+    @Column(length = 20)
+    private String phone;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    @Column(nullable = false)
+    private Boolean isActive;
+
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Portfolio portfolio;
+
+    // Constructor
+    public Client(FinancialAdvisor financialAdvisor, String firstName, String lastName, 
+                  String email, String phone, LocalDateTime createdAt, 
+                  LocalDateTime updatedAt, Boolean isActive) {
+        this.financialAdvisor = financialAdvisor;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.isActive = isActive;
+    }
+
+    // Getters and Setters (omitted for brevity - add similar to above)
+    public Long getClientId() { return clientId; }
+
+    public FinancialAdvisor getFinancialAdvisor() { return financialAdvisor; }
+    public void setFinancialAdvisor(FinancialAdvisor financialAdvisor) { this.financialAdvisor = financialAdvisor; }
+
+    // ... add all other getters/setters
+}
+
+package com.example.entities; // Adjust package name as needed
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+public class Portfolio {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long portfolioId;
+
+    @OneToOne
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
+
+    @Column(nullable = false, length = 100, unique = true)
+    private String name;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PortfolioSecurity> portfolioSecurities = new ArrayList<>();
+
+    // Constructor initializing all fields
+    public Portfolio(Client client, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.client = client;
+        this.name = name;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    // Getters and Setters
+    public Long getPortfolioId() { return portfolioId; }
+
+    public Client getClient() { return client; }
+    public void setClient(Client client) { this.client = client; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
+    public List<PortfolioSecurity> getPortfolioSecurities() { return portfolioSecurities; }
+    public void setPortfolioSecurities(List<PortfolioSecurity> portfolioSecurities) { 
+        this.portfolioSecurities = portfolioSecurities; 
+    }
+}
+
+package com.example.entities;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+public class Security {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long securityId;
+
+    @Column(nullable = false, length = 100)
+    private String name;
+
+    @Column(length = 100)
+    private String category;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    @Column(nullable = false)
+    private Boolean isActive;
+
+    // Constructor
+    public Security(String name, String category, LocalDateTime createdAt, 
+                    LocalDateTime updatedAt, Boolean isActive) {
+        this.name = name;
+        this.category = category;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.isActive = isActive;
+    }
+
+    public Long getSecurityId() { return securityId; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
+    public Boolean getIsActive() { return isActive; }
+    public void setIsActive(Boolean isActive) { this.isActive = isActive; }
+}
+
+package com.example.entities;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Entity
+public class PortfolioSecurity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long portfolioSecurityId;
+
+    @ManyToOne
+    @JoinColumn(name = "portfolio_id", nullable = false)
+    private Portfolio portfolio;
+
+    @ManyToOne
+    @JoinColumn(name = "security_id", nullable = false)
+    private Security security;
+
+    @Column(nullable = false)
+    private LocalDate purchaseDate;
+
+    @Column(nullable = false, precision = 18, scale = 2)
+    private BigDecimal purchasePrice;
+
+    @Column(nullable = false, precision = 18, scale = 6)
+    private BigDecimal quantity;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    // Constructor
+    public PortfolioSecurity(Portfolio portfolio, Security security, LocalDate purchaseDate,
+                             BigDecimal purchasePrice, BigDecimal quantity, 
+                             LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.portfolio = portfolio;
+        this.security = security;
+        this.purchaseDate = purchaseDate;
+        this.purchasePrice = purchasePrice;
+        this.quantity = quantity;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public Long getPortfolioSecurityId() { return portfolioSecurityId; }
+
+    public Portfolio getPortfolio() { return portfolio; }
+    public void setPortfolio(Portfolio portfolio) { this.portfolio = portfolio; }
+
+    public Security getSecurity() { return security; }
+    public void setSecurity(Security security) { this.security = security; }
+
+    public LocalDate getPurchaseDate() { return purchaseDate; }
+    public void setPurchaseDate(LocalDate purchaseDate) { this.purchaseDate = purchaseDate; }
+
+    public BigDecimal getPurchasePrice() { return purchasePrice; }
+    public void setPurchasePrice(BigDecimal purchasePrice) { this.purchasePrice = purchasePrice; }
+
+    public BigDecimal getQuantity() { return quantity; }
+    public void setQuantity(BigDecimal quantity) { this.quantity = quantity; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+}
+
+package com.example.entities;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+public class SystemUser {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long userId;
+
+    @ManyToOne
+    @JoinColumn(name = "advisor_id")
+    private FinancialAdvisor financialAdvisor;
+
+    @Column(nullable = false, length = 50, unique = true)
+    private String username;
+
+    @Column(nullable = false, length = 255)
+    private String passwordHash;
+
+    @Column(length = 30)
+    private String role;
+
+    @Column(nullable = false)
+    private Boolean isActive;
+
+    private LocalDateTime lastLogin;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    // Constructor
+    public SystemUser(FinancialAdvisor financialAdvisor, String username, String passwordHash,
+                      String role, Boolean isActive, LocalDateTime lastLogin,
+                      LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.financialAdvisor = financialAdvisor;
+        this.username = username;
+        this.passwordHash = passwordHash;
+        this.role = role;
+        this.isActive = isActive;
+        this.lastLogin = lastLogin;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public Long getUserId() { return userId; }
+
+    public FinancialAdvisor getFinancialAdvisor() { return financialAdvisor; }
+    public void setFinancialAdvisor(FinancialAdvisor financialAdvisor) { 
+        this.financialAdvisor = financialAdvisor; 
+    }
+
+    // Add remaining getters and setters similarly...
+}
